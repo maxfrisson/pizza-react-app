@@ -1,6 +1,6 @@
 import classNames from "classnames";
 
-export const Button = ({ onClick, className, outline, children }) => {
+const Button = ({ onClick, className, outline, children }) => {
   return (
     <button
     onClick={onClick}
@@ -12,3 +12,5 @@ export const Button = ({ onClick, className, outline, children }) => {
     </button>
   );
 };
+
+export default Button;
