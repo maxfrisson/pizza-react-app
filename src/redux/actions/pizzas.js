@@ -5,11 +5,19 @@ export const setLoaded = (payload) => ({
   payload,
 });
 
-export const fetchPizzas = () => async (dispatch) => {
+export const fetchPizzas = (sortBy, category) => async (dispatch) => {
   dispatch(setLoaded(false));
-  await axios.get("http://localhost:3001/pizzas").then(({ data }) => {
-    dispatch(setPizzas(data));
-  });
+  await axios
+    .get(`http://localhost:3001/pizzas`, {
+      params: {
+        category: category,
+        _sort: sortBy,
+        _order: "asc",
+      },
+    })
+    .then(({ data }) => {
+      dispatch(setPizzas(data));
+    });
 };
 
 export const setPizzas = (items) => ({
