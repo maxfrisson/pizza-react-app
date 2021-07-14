@@ -11,10 +11,22 @@ function PizzaBlock({ id, name, imageUrl, price, types, sizes, onClickAddPizza }
   };
 
   const availableSize = [26, 30, 40];
-  const [activeSize, setActiveSize] = useState(sizes[0]);
+  const [activeSize, setActiveSize] = useState(0);
   const onSelectSize = (index) => {
     setActiveSize(index);
   };
+
+  const onAddPizza = () => {
+    const obj = {
+      id,
+      name,
+      imageUrl,
+      price,
+      size: availableSize[activeSize],
+      type: availableTypes[activeType],
+    }
+    onClickAddPizza(obj)
+  }
 
   return (
     <div className="pizza-block">
@@ -52,7 +64,7 @@ function PizzaBlock({ id, name, imageUrl, price, types, sizes, onClickAddPizza }
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">от {price} ₽</div>
-        <Button onClick={() => onClickAddPizza({id, name, imageUrl, price})} className="button--add" outline>
+        <Button onClick={onAddPizza} className="button--add" outline>
           <svg
             width="12"
             height="12"
