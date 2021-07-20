@@ -8,7 +8,7 @@ export const setLoaded = (payload) => ({
 export const fetchPizzas = (sortBy, category) => async (dispatch) => {
   dispatch(setLoaded(false));
   await axios
-    .get(`http://localhost:3001/pizzas`, {
+    .get(`/pizzas`, {
       params: {
         category: category,
         _sort: sortBy,
