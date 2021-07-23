@@ -1,18 +1,31 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CartItem } from "../components";
+import { clearCart } from "../redux/actions/cart";
+import emptyCartImg from '../assets/img/empty-cart.png';
+import { Link } from "react-router-dom";
 
 function Cart() {
-  const { totalPrice, totalCount,  items} = useSelector(({ cart }) => cart);
+  const dispatch = useDispatch();
 
-  const addedPizzas = Object.keys(items).map(key => {
+  const { totalPrice, totalCount, items } = useSelector(({ cart }) => cart);
+
+  const addedPizzas = Object.keys(items).map((key) => {
     return items[key].items[0];
-  })
-  
+  });
+
+  const onClearCart = () => {
+    if (window.confirm("Вы действительно хотите очистить корзину?")) {
+      dispatch(clearCart());
+    }
+  };
+
   return (
     <div className="content">
       <div className="container container--cart">
-        <div className="cart">
+
+        {
+          totalCount ?         <div className="cart">
           <div className="cart__top">
             <h2 className="content__title">
               <svg
@@ -83,13 +96,19 @@ function Cart() {
                   strokeLinejoin="round"
                 />
               </svg>
-              <span>Очистить корзину</span>
+              <span onClick={onClearCart}>Очистить корзину</span>
             </div>
           </div>
           <div className="content__items">
-            {
-              addedPizzas.map(obj => <CartItem name={obj.name} type={obj.type} size={obj.size} totalPrice={items[obj.id].totalPrice} totalCount={items[obj.id].items.length} />)
-            }
+            {addedPizzas.map((obj) => (
+              <CartItem
+                name={obj.name}
+                type={obj.type}
+                size={obj.size}
+                totalPrice={items[obj.id].totalPrice}
+                totalCount={items[obj.id].items.length}
+              />
+            ))}
           </div>
           <div className="cart__bottom">
             <div className="cart__bottom-details">
@@ -127,8 +146,22 @@ function Cart() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </div> :           <div className="cart cart--empty">
+            <h2>Корзина пустая <icon>😕</icon></h2>
+            <p>
+              Вероятней всего, вы не заказывали ещё пиццу.<br />
+              Для того, чтобы заказать пиццу, перейди на главную страницу.
+            </p>
+            <img src={emptyCartImg} alt="Empty cart" />
+            <Link to="/" className="button button--black">
+              <span>Вернуться назад</span>
+            </Link>
+          </div>
+ 
+        }
+
+
+     </div>
     </div>
   );
 }
