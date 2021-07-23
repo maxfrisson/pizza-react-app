@@ -34,6 +34,19 @@ const cart = (state = initialState, action) => {
       };
     }
 
+    case "REMOVE_CART_ITEM": {
+      const newItems = {
+        ...state.items,
+      };
+      const currentTotalPrice = newItems[action.payload].totalPrice;
+      delete newItems[action.payload];
+      return {
+        ...state,
+        items: newItems,
+        totalPrice: state.totalPrice - currentTotalPrice
+      };
+    }
+
     case "CLEAR_CART": {
       return {
         totalPrice: 0,
