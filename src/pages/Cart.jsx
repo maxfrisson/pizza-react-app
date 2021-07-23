@@ -88,7 +88,7 @@ function Cart() {
           </div>
           <div className="content__items">
             {
-              addedPizzas.map(obj => <CartItem name={obj.name} type={obj.type} size={obj.size} totalPrice={items[obj.id].totalPrice} />)
+              addedPizzas.map(obj => <CartItem name={obj.name} type={obj.type} size={obj.size} totalPrice={items[obj.id].totalPrice} totalCount={items[obj.id].items.length} />)
             }
           </div>
           <div className="cart__bottom">
