@@ -8,8 +8,7 @@ function Cart() {
   const addedPizzas = Object.keys(items).map(key => {
     return items[key].items[0];
   })
-
-
+  
   return (
     <div className="content">
       <div className="container container--cart">

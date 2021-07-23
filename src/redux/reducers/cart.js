@@ -4,9 +4,7 @@ const initialState = {
   totalCount: 0,
 };
 
-const getTotalPrice = (arr) => {
-  arr.reduce((sum, obj) => obj.price + sum, 0);
-};
+const getTotalPrice = (arr) => arr.reduce((sum, obj) => obj.price + sum, 0);
 
 const cart = (state = initialState, action) => {
   switch (action.type) {
