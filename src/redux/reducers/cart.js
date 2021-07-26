@@ -69,6 +69,43 @@ const cart = (state = initialState, action) => {
       };
     }
 
+    case "PLUS_CART_ITEM": {
+      const newItems = [...state.items[action.payload].items, state.items[action.payload].items[0]];
+
+      const totalCount = getTotalSum(newItems, "items.length");
+      const totalPrice = getTotalSum(newItems, "totalPrice");
+      return {
+        ...state,
+        items: {
+          ...state.items,
+          [action.payload]: {
+            items: newItems,
+            totalPrice: getTotalPrice(newItems),
+          },
+        },
+        totalCount,
+        totalPrice,
+      };
+    }
+
+    case "MINUS_CART_ITEM": {
+      const oldItems = state.items[action.payload].items;
+      const newObjItems =
+        oldItems.length > 1 ? state.items[action.payload].items.slice(1) : oldItems;
+
+      const newItems = {
+        ...state.items,
+        [action.payload]: {
+          items: newObjItems,
+          totalPrice: getTotalPrice(newObjItems),
+        },
+      };
+
+      const totalCount = getTotalSum(newItems.items, "items.length");
+      const totalPrice = getTotalSum(newItems.items, "totalPrice");
+      return { ...state, items: newItems, totalCount, totalPrice };
+    }
+
     default:
       return state;
   }

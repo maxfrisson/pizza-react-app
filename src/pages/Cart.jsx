@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CartItem } from "../components";
-import { clearCart, removeCartItem } from "../redux/actions/cart";
+import { clearCart, removeCartItem, plusCartItem, minusCartItem } from "../redux/actions/cart";
 import emptyCartImg from "../assets/img/empty-cart.png";
 import { Link } from "react-router-dom";
 
@@ -25,6 +25,14 @@ function Cart() {
       dispatch(removeCartItem(id));
     }
   };
+
+  const onPlusItem = (id) => {
+    dispatch(plusCartItem(id))
+  }
+
+  const onMinusItem = (id) => {
+    dispatch(minusCartItem(id)) 
+  }
 
   return (
     <div className="content">
@@ -114,6 +122,8 @@ function Cart() {
                   totalPrice={items[obj.id].totalPrice}
                   totalCount={items[obj.id].items.length}
                   onRemoveItem={onRemoveItem}
+                  onPlus={onPlusItem}
+                  onMinus={onMinusItem}
                 />
               ))}
             </div>
