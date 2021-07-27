@@ -70,19 +70,22 @@ const cart = (state = initialState, action) => {
     }
 
     case "PLUS_CART_ITEM": {
-      const newItems = [...state.items[action.payload].items, state.items[action.payload].items[0]];
+      const newObjItems = [...state.items[action.payload].items, state.items[action.payload].items[0]];
+
+      const newItems = {
+        ...state.items,
+        [action.payload]: {
+          items: newObjItems,
+          totalPrice: getTotalPrice(newObjItems),
+        },
+      };
 
       const totalCount = getTotalSum(newItems, "items.length");
       const totalPrice = getTotalSum(newItems, "totalPrice");
+
       return {
         ...state,
-        items: {
-          ...state.items,
-          [action.payload]: {
-            items: newItems,
-            totalPrice: getTotalPrice(newItems),
-          },
-        },
+        items: newItems,
         totalCount,
         totalPrice,
       };
